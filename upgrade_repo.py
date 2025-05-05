@@ -24,7 +24,7 @@ def load_env_file(env_path):
         os.environ.setdefault(key, val)
 
 def run_command(cmd, cwd=None, mgs=None):
-    logging.info(f"Ejecutando...{'' if mgs is None else mgs} {' '.join(cmd)}")
+    logging.info(f"Ejecutando...{'' if mgs is None else mgs}")
     try:
         r = subprocess.run(
             cmd,
