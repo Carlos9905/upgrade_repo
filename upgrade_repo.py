@@ -23,8 +23,8 @@ def load_env_file(env_path):
         val = val.strip().strip('"').strip("'")
         os.environ.setdefault(key, val)
 
-def run_command(cmd, cwd=None):
-    logging.info(f"Ejecutando...")
+def run_command(cmd, cwd=None, mgs=None):
+    logging.info(f"Ejecutando...{'' if mgs is None else mgs} {' '.join(cmd)}")
     try:
         r = subprocess.run(
             cmd,
@@ -64,11 +64,11 @@ def main():
 
     # 3) Hacer git pull
     git_url = f"https://{token}@github.com/{owner}/{repo}.git"
-    if not run_command(["git", "pull", git_url], cwd=repo_dir):
+    if not run_command(["git", "pull", git_url], cwd=repo_dir, mgs="actualización del repositorio"):
         sys.exit(1)
 
     # 4) Reiniciar servicio
-    if not run_command(["sudo", "service", service, "restart"]):
+    if not run_command(["sudo", "service", service, "restart"], mgs="reinicio de servicio"):
         sys.exit(1)
 
     logging.info("Actualización completada con éxito.")
